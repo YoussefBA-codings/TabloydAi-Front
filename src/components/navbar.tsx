@@ -30,12 +30,10 @@ function ResponsiveAppBar() {
   };
 
   const handleCloseNavMenu = () => {
-
     setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
-    navigate('/pricing')
     setAnchorElUser(null);
   };
 
@@ -92,7 +90,7 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={setAnchorElNav}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -120,6 +118,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
+                href={page.toLowerCase()}
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
