@@ -1,7 +1,12 @@
-export default function Home() {
+import Link from 'next/link'
+import ResponsiveAppBar from '@/components/navbar'
+
+function Home() {
   return (
     <div>
-      <h1>Test</h1>
+      <ResponsiveAppBar />
     </div>
   )
 }
+
+export default Home
