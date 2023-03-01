@@ -12,13 +12,15 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+// import { useRouter } from 'next/router';
 
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Converter', 'Pricing', 'Blog',];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
 function ResponsiveAppBar() {
+  // const router = useRouter();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -30,6 +32,7 @@ function ResponsiveAppBar() {
   };
 
   const handleCloseNavMenu = () => {
+    // router.push(`/${page.toLowerCase()}`);
     setAnchorElNav(null);
   };
 

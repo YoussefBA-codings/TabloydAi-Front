@@ -3,9 +3,10 @@ import ResponsiveAppBar from '@/components/navbar'
 
 function Home() {
   return (
-    <div>
+    <>
       <ResponsiveAppBar />
-    </div>
+      <h1>Home</h1>
+    </>
   )
 }
 
