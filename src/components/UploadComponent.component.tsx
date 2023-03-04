@@ -1,7 +1,7 @@
 import React from 'react';
 
 // CSS Import
-import converterStyle from "./../styles/converter/index.module.scss"
+import converterStyle from "@/styles/converter/index.module.scss"
 
 // MUI Export
 import Card from '@mui/material/Card';
@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import Divider  from '@mui/material/Divider';
 
 // Components Export
-import DropzoneComponent from './Dorpzone.component';
+import DropzoneComponent from '@/components/Dorpzone.component';
 
 
 

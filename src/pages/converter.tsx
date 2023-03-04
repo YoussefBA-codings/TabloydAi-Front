@@ -1,7 +1,7 @@
 import React from 'react';
 
 // CSS Import
-import converterStyle from "./../styles/converter/index.module.scss"
+import converterStyle from "@/styles/converter/index.module.scss"
 
 // MUI Export
 import Grid from '@mui/material/Grid';

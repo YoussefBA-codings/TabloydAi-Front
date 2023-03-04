@@ -1,15 +1,20 @@
 import React,{ useCallback, useMemo} from 'react';
-import {useDropzone} from "react-dropzone";
+import { useDropzone } from "react-dropzone";
+import { useSelector, useDispatch } from 'react-redux'
 
-// CSS Import
-import dropzoneStyle from "./../styles/dropzone.module.scss"
+// Store Imports
+import { RootState } from '@/store';
+import { appendFile, removeFile } from '@/store/converter'
 
-// MUI Import
+// CSS Imports
+import dropzoneStyle from "@/styles/dropzone.module.scss"
+
+// MUI Imports
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 
-// Components Import
+// Components Imports
 
 
 
@@ -42,22 +47,19 @@ const rejectStyle = {
   borderColor: '#ff1744'
 };
 
-let filesElement: any = null
-
 
 
 export default function DropzoneComponent() {
+  const dispatch = useDispatch()
+  const files = useSelector((state: RootState) => { return state.converter.files })
+  const countFiles = useSelector((state: RootState) => { return state.converter.files.length })
 
   const onDrop = useCallback((acceptedFiles: any) => {
     console.log(acceptedFiles);
-    filesElement = acceptedFiles.map((file: any) => (
-      <li key={file.path}>
-        {file.path} - {file.size} bytes
-      </li>
-    ))
+    dispatch(appendFile(acceptedFiles))
   }, [])
 
-  const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({ accept: { 'image/*': [] }, onDrop })
+  const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({ accept: { 'application/pdf': [] }, onDrop })
   
   const style = useMemo(() => ({
     ...baseStyle,
@@ -80,10 +82,22 @@ export default function DropzoneComponent() {
         </div>
       </CardActions>
       {
-        filesElement
+        files
         ? <CardContent>
-          <aside>
-          <ul>{filesElement}</ul>
+            <aside>
+              <p>countFiles : {countFiles}</p>
+              <ul>
+                {
+                  files.map((file, index) =>
+                    <li key={index}>
+                      {file.path} - {file.size} bytes
+                      
+                      <span> .      </span>
+                      <span className="deleteFile" onClick={() => dispatch(removeFile(file))}>x</span>
+                    </li>
+                  )
+                }
+              </ul>
           </aside>
         </CardContent>
         : null

@@ -1,17 +1,24 @@
-// CSS Import
-import './../styles/globals.scss'
+import { Provider } from 'react-redux'
 
-// MUI Import
+// Store Imports
+import store from '@/store'
 
-// Components Import
+// CSS Imports
+import '@/styles/globals.scss'
+
+// MUI Imports
+
+// Components Imports
 import ResponsiveAppBar from '@/components/Navbar.component'
 
 
 
 export default function TablAIdApp({Component, pageProps}: any) {
   return <>
-    <ResponsiveAppBar/>
-    <Component {...pageProps} />
+    <Provider store={store}>
+      <ResponsiveAppBar/>
+      <Component {...pageProps} />
+    </Provider>
   </>
 
 }
