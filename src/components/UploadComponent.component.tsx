@@ -1,27 +1,36 @@
 import React from 'react';
-import { Card, CardActions, Grid, Box, Stack, Divider } from '@mui/material';
 
-const UploadComponent = () => {
+// CSS Import
+import converterStyle from "./../styles/converter/index.module.scss"
+
+// MUI Export
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import Stack from '@mui/material/Stack';
+import Divider  from '@mui/material/Divider';
+
+// Components Export
+import DropzoneComponent from './Dorpzone.component';
+
+
+
+export default function UploadComponent() {
   return (
-    <Card sx={{ backgroundColor: 'grey', }}>
+    <Card className={converterStyle.uploadArea}>
       <CardActions>
-        <Stack direction="row"
-          divider={<Divider orientation="vertical" flexItem />}
+        <Stack 
+          className={converterStyle.uploadArea__stack}
+          divider={<Divider flexItem />}
           spacing={2}
-          sx={{ 'max-width': '100%' }}>
-          <p>D&D</p>
+          direction="column"
+          alignItems="center"
+          justifyContent="space-around"
+        >
+          <DropzoneComponent />
           <p>Facultative Infos</p>
           <p>Convert</p>
         </Stack>
-
-        {/* <Grid container>
-          <Grid id="dragAndDrop" item lg={12} sx={{ backgroundColor: 'red' }}>D&D</Grid>
-          <Grid id="facultativeInfos" item lg={12} sx={{ backgroundColor: 'green' }}>Facultative Infos</Grid>
-          <Grid id="submitConvert" item lg={12} sx={{ backgroundColor: 'blue' }}>Convert</Grid>
-        </Grid> */}
       </CardActions>
     </Card >
   );
 };
-
-export default UploadComponent;

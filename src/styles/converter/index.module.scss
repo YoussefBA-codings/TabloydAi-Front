@@ -1,0 +1,22 @@
+.converterContainer{
+  height: calc(100vh - 68.5px);
+
+  .converterGridItems{
+    padding: 24px;
+  }
+
+  .uploadArea{
+    height: 100%;
+    background-color: lightgrey;
+
+    .uploadArea__stack{
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .chekerArea{
+    height: 100%;
+    background-color: lightgrey;
+  }
+}

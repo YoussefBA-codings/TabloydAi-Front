@@ -1,13 +1,13 @@
-import Link from 'next/link'
-import ResponsiveAppBar from '@/components/navbar'
+// MUI Export
 
-function Home() {
+// Components Export
+
+
+
+export default function Home() {
   return (
     <>
-      <ResponsiveAppBar />
       <h1>Home</h1>
     </>
   )
 }
-
-export default Home
