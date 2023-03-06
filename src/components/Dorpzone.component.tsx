@@ -1,13 +1,13 @@
-import React,{ useCallback, useMemo} from 'react';
-import { useDropzone } from "react-dropzone";
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useCallback, useMemo } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { useSelector, useDispatch } from 'react-redux';
 
 // Store Imports
 import { RootState } from '@/store';
-import { appendFile, removeFile } from '@/store/converter'
+import { appendFile, removeFile } from '@/store/converter';
 
 // CSS Imports
-import dropzoneStyle from "@/styles/dropzone.module.scss"
+import dropzoneStyle from '@/styles/dropzone.module.scss';
 
 // MUI Imports
 import Card from '@mui/material/Card';
@@ -15,8 +15,6 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 
 // Components Imports
-
-
 
 const baseStyle = {
   height: '150px',
@@ -47,62 +45,64 @@ const rejectStyle = {
   borderColor: '#ff1744'
 };
 
-
-
 export default function DropzoneComponent() {
-  const dispatch = useDispatch()
-  const files = useSelector((state: RootState) => { return state.converter.files })
-  const countFiles = useSelector((state: RootState) => { return state.converter.files.length })
+  const dispatch = useDispatch();
+  const files = useSelector((state: RootState) => {
+    return state.converter.files;
+  });
+  const countFiles = useSelector((state: RootState) => {
+    return state.converter.files.length;
+  });
 
-  const onDrop = useCallback((acceptedFiles: any) => {
-    console.log(acceptedFiles);
-    dispatch(appendFile(acceptedFiles))
-  }, [])
+  const onDrop = useCallback(
+    (acceptedFiles: any) => {
+      console.log(acceptedFiles);
+      dispatch(appendFile(acceptedFiles));
+    },
+    [dispatch]
+  );
 
-  const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({ accept: { 'application/pdf': [] }, onDrop })
-  
-  const style = useMemo(() => ({
-    ...baseStyle,
-    ...(isFocused ? focusedStyle : {}),
-    ...(isDragAccept ? acceptStyle : {}),
-    ...(isDragReject ? rejectStyle : {})
-  }), [
-    isFocused,
-    isDragAccept,
-    isDragReject
-  ]);
+  const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
+    useDropzone({ accept: { 'application/pdf': [] }, onDrop });
 
+  const style = useMemo(
+    () => ({
+      ...baseStyle,
+      ...(isFocused ? focusedStyle : {}),
+      ...(isDragAccept ? acceptStyle : {}),
+      ...(isDragReject ? rejectStyle : {})
+    }),
+    [isFocused, isDragAccept, isDragReject]
+  );
 
   return (
     <Card variant="outlined" className={dropzoneStyle.dropzoneArea}>
       <CardActions>
-        <div {...getRootProps({style} as any)}>
-          <input {...getInputProps()}/>
+        <div {...getRootProps({ style } as any)}>
+          <input {...getInputProps()} />
           <p>Drop Here</p>
         </div>
       </CardActions>
-      {
-        files
-        ? <CardContent>
-            <aside>
-              <p>countFiles : {countFiles}</p>
-              <ul>
-                {
-                  files.map((file, index) =>
-                    <li key={index}>
-                      {file.path} - {file.size} bytes
-                      
-                      <span> .      </span>
-                      <span className="deleteFile" onClick={() => dispatch(removeFile(file))}>x</span>
-                    </li>
-                  )
-                }
-              </ul>
+      {files ? (
+        <CardContent>
+          <aside>
+            <p>countFiles : {countFiles}</p>
+            <ul>
+              {files.map((file, index) => (
+                <li key={index}>
+                  {file.path} - {file.size} bytes
+                  <span> . </span>
+                  <span
+                    className="deleteFile"
+                    onClick={() => dispatch(removeFile(file))}>
+                    x
+                  </span>
+                </li>
+              ))}
+            </ul>
           </aside>
         </CardContent>
-        : null
-      }
+      ) : null}
     </Card>
   );
-};
-
+}

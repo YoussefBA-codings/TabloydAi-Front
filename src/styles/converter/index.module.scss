@@ -6,7 +6,6 @@
   }
 
   .uploadArea{
-    height: 100%;
     background-color: lightgrey;
 
     .uploadArea__stack{
@@ -17,6 +16,19 @@
 
   .chekerArea{
     height: 100%;
-    background-color: lightgrey;
+    background-color: grey;
+    
+    .chekerArea__content{
+      height: 100%;
+
+      .container.spreadsheet {
+          width: 100% !important;
+          height: 100% !important;
+          border: 1px solid lightgray !important;
+          padding-right: 0;
+          padding-left: 0;
+        }
+    }
+    
   }
 }
