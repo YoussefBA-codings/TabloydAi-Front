@@ -10,6 +10,7 @@ import Stack from '@mui/material/Stack';
 import Divider  from '@mui/material/Divider';
 
 // Components Export
+import Submit from '@/components/Submit.component';
 import DropzoneComponent from '@/components/Dorpzone.component';
 
 
@@ -27,8 +28,8 @@ export default function UploadComponent() {
           justifyContent="space-around"
         >
           <DropzoneComponent />
-          <p>Facultative Infos</p>
-          <p>Convert</p>
+          {/* <p>Facultative Infos</p> */}
+          <Submit />
         </Stack>
       </CardActions>
     </Card >
