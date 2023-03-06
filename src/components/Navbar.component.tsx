@@ -35,20 +35,9 @@ function ResponsiveAppBar() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
-  const handleNavigationNavMenu = (page) => {
-    router.push('/conversion', undefined, { shallow: true });
-    setAnchorElNav(null);
-  };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  const handleNavigationUserMenu = (page) => {
-    router.push('/conversion', undefined, { shallow: true });
-    setAnchorElNav(null);
-  }
 
   return (
     <AppBar position="static">
@@ -133,7 +122,7 @@ function ResponsiveAppBar() {
               <Button
                 href={page.toLowerCase()}
                 key={page}
-                onClick={handleNavigationNavMenu}
+                onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
@@ -164,7 +153,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => handleNavigationUserMenu(setting)}>
+                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
