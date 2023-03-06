@@ -12,7 +12,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-// import { useRouter } from 'next/router';
+
+import { useRouter } from 'next/router';
 
 
 const pages = ['Converter', 'Pricing', 'Blog',];
@@ -20,7 +21,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
 function ResponsiveAppBar() {
-  // const router = useRouter();
+  const router = useRouter();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -32,13 +33,22 @@ function ResponsiveAppBar() {
   };
 
   const handleCloseNavMenu = () => {
-    // router.push(`/${page.toLowerCase()}`);
+    setAnchorElNav(null);
+  };
+
+  const handleNavigationNavMenu = (page) => {
+    router.push('/conversion', undefined, { shallow: true });
     setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleNavigationUserMenu = (page) => {
+    router.push('/conversion', undefined, { shallow: true });
+    setAnchorElNav(null);
+  }
 
   return (
     <AppBar position="static">
@@ -123,7 +133,7 @@ function ResponsiveAppBar() {
               <Button
                 href={page.toLowerCase()}
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={handleNavigationNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
@@ -154,7 +164,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => handleNavigationUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
