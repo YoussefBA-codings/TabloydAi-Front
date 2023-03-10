@@ -1,5 +1,9 @@
 import dynamic from 'next/dynamic';
 import React from 'react';
+import { useSelector } from 'react-redux';
+
+// Store Import
+import { RootState } from '@/store';
 
 // CSS Import
 import converterStyle from '@/styles/converter/index.module.scss';
@@ -15,6 +19,10 @@ const NoSsrCheckerComponent = dynamic(
 );
 
 export default function Converter() {
+  const fileXls = useSelector((state: RootState) => {
+    return state.converter.fileXls;
+  });
+
   return (
     <>
       <Grid
@@ -26,7 +34,7 @@ export default function Converter() {
           <UploadComponent />
         </Grid>
         <Grid item lg={8} className={converterStyle.converterGridItems}>
-          <NoSsrCheckerComponent />
+          {fileXls ? <NoSsrCheckerComponent /> : null}
         </Grid>
       </Grid>
     </>

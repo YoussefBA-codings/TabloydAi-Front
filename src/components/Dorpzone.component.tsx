@@ -1,10 +1,15 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { useSelector, useDispatch } from 'react-redux';
+
+// Hooks Imports
+import { useAppSelector, useAppDispatch } from '@/hooks/store.hook';
 
 // Store Imports
-import { RootState } from '@/store';
-import { appendFile, removeFile } from '@/store/converter';
+import { filesSelector, countFilesSelector } from '@/store/converter/selector';
+import {
+  appendFilesAction,
+  removeFilesAction
+} from '@/store/converter/actions';
 
 // CSS Imports
 import dropzoneStyle from '@/styles/dropzone.module.scss';
@@ -46,18 +51,14 @@ const rejectStyle = {
 };
 
 export default function DropzoneComponent() {
-  const dispatch = useDispatch();
-  const files = useSelector((state: RootState) => {
-    return state.converter.files;
-  });
-  const countFiles = useSelector((state: RootState) => {
-    return state.converter.files.length;
-  });
+  const dispatch = useAppDispatch();
+  const files = useAppSelector(filesSelector);
+  const countFiles = useAppSelector(countFilesSelector);
 
   const onDrop = useCallback(
-    (acceptedFiles: any) => {
-      console.log(acceptedFiles);
-      dispatch(appendFile(acceptedFiles));
+    async (acceptedFiles: any) => {
+      console.log(await acceptedFiles[0].arrayBuffer());
+      dispatch(appendFilesAction(acceptedFiles));
     },
     [dispatch]
   );
@@ -88,13 +89,13 @@ export default function DropzoneComponent() {
           <aside>
             <p>countFiles : {countFiles}</p>
             <ul>
-              {files.map((file, index) => (
+              {files.map((file: any, index: number) => (
                 <li key={index}>
                   {file.path} - {file.size} bytes
                   <span> . </span>
                   <span
                     className="deleteFile"
-                    onClick={() => dispatch(removeFile(file))}>
+                    onClick={() => dispatch(removeFilesAction(file))}>
                     x
                   </span>
                 </li>

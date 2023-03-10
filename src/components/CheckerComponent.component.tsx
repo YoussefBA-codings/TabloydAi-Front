@@ -1,10 +1,18 @@
 import React from 'react';
+import * as XLSX from 'xlsx';
 import '@grapecity/spread-sheets-react';
 import {
   SpreadSheets,
   Worksheet,
   Column
 } from '@grapecity/spread-sheets-react';
+// import readExcelFile from 'read-excel-file/node';
+
+// Hooks Imports
+import { useAppSelector } from '@/hooks/store.hook';
+
+// Store Imports
+import { convertedFilesSelector } from '@/store/converter/selector';
 
 // CSS Import
 import '@grapecity/spread-sheets/styles/gc.spread.sheets.excel2016colorful.css';
@@ -16,12 +24,13 @@ import CardContent from '@mui/material/CardContent';
 
 // Components Export
 
-export default function ChekerArea() {
-  const tableData = [{ id: 1 }]; //TODO: Get from store or read file
+function ChekerArea() {
+  const tableData = XLSX.read(useAppSelector(convertedFilesSelector)); //TODO: Get from store or read file
+  console.log(tableData);
   const config = {
-    sheetName: 'Sheet 1',
+    sheetName: tableData.SheetNames[0],
     hostClass: 'spreadsheet',
-    autoGenerateColumns: false,
+    autoGenerateColumns: true,
     width: 200,
     visible: true,
     resizable: true,
@@ -35,34 +44,12 @@ export default function ChekerArea() {
         <SpreadSheets hostClass={config.hostClass}>
           <Worksheet
             name={config.sheetName}
-            dataSource={tableData}
-            autoGenerateColumns={config.autoGenerateColumns}>
-            <Column width={50} dataField="id" headerText="ID"></Column>
-            <Column width={200} dataField="client" headerText="Client"></Column>
-            <Column
-              width={320}
-              dataField="description"
-              headerText="Description"></Column>
-            <Column
-              width={100}
-              dataField="value"
-              headerText="Value"
-              formatter={config.priceFormatter}></Column>
-            <Column
-              width={100}
-              dataField="itemCount"
-              headerText="Quantity"></Column>
-            <Column
-              width={100}
-              dataField="soldBy"
-              headerText="Sold By"></Column>
-            <Column
-              width={100}
-              dataField="country"
-              headerText="Country"></Column>
-          </Worksheet>
+            dataSource={tableData.Sheets[config.sheetName]}
+            autoGenerateColumns={config.autoGenerateColumns}></Worksheet>
         </SpreadSheets>
       </CardContent>
     </Card>
   );
 }
+
+export default ChekerArea;
