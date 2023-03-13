@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 // Reducer Imports
-import converterReducer from './converter';
+import { converterReducer } from '@/store/converter/reducer';
 
 const store = configureStore({
-	reducer: {
-		converter: converterReducer,
-	},
+  reducer: {
+    converter: converterReducer
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: true })
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
