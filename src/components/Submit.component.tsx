@@ -1,11 +1,11 @@
 import React from 'react';
+// import { appUseSelector, appUseDispatch } from 'react-redux'
 
-// Hooks Imports
-import { useAppSelector, useAppDispatch } from '@/hooks/store.hook';
+// Hokks import
+import { useAppDispatch, useAppSelector } from '@/hooks';
 
 // Store Imports
-import { countFilesSelector } from '@/store/converter/selector';
-import { sendingFile } from '@/store/converter/reducer';
+import { sendingFile, countFilesSelector } from '@/store/converter';
 
 // CSS Import
 import converterStyle from '@/styles/converter/index.module.scss';
