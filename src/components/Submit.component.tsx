@@ -1,7 +1,7 @@
 import React from 'react';
 // import { appUseSelector, appUseDispatch } from 'react-redux'
 
-// Hokks import
+// Hooks import
 import { useAppDispatch, useAppSelector } from '@/hooks';
 
 // Store Imports
@@ -16,15 +16,16 @@ import SendIcon from '@mui/icons-material/Send';
 
 // Components Export
 
-export default function UploadComponent() {
+export default function UploadComponent({ disabled }: any) {
   const dispatch = useAppDispatch();
-  const countFiles = useAppSelector(countFilesSelector);
+  // const countFiles = useAppSelector(countFilesSelector);
 
   return (
     <>
       <Button
         variant="contained"
-        disabled={countFiles > 0 ? undefined : true}
+        disabled={disabled}
+        // disabled={countFiles > 0 ? undefined : true}
         endIcon={<SendIcon />}
         onClick={() => {
           dispatch(sendingFile);

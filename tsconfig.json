@@ -16,8 +16,14 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["./src/*"],
+      "#/*": ["./*"]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./@types/**/*.d.ts",
+      "./@types/**/*.dto.ts"
+    ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
