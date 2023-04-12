@@ -1,52 +1,76 @@
-import { BehaviorSubject } from 'rxjs';
 import Router from 'next/router';
 import getConfig from 'next/config';
 
 import { BaseService } from '@/services/base.service';
 const { publicRuntimeConfig } = getConfig();
 
-// const userSubject = new BehaviorSubject(
-//   typeof window !== 'undefined' &&
-//     JSON.parse(localStorage.getItem('user') as string | '')
-// );
-
 export class UserService extends BaseService {
-  private baseUrl = `${publicRuntimeConfig.apiUrl}/user`;
-  // private user = userSubject.asObservable();
+  private baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
-  // public get userValue() {
-  //   return userSubject.value;
-  // }
-
-  constructor() {
-    super();
+  constructor(userStorage: string | null, localStorage?: Storage) {
+    super(userStorage, localStorage);
   }
-  public login(username: string, password: string) {
-    return super
-      .post(`${this.baseUrl}/authenticate`, {
-        username,
+
+  public async login(userName: string, password: string) {
+    const user = await super
+      .post(`${this.baseUrl}/login`, {
+        userName,
         password
       })
-      .then((user) => {
-        this.userSubject.next(user);
-        localStorage.setItem('user', JSON.stringify(user));
+      .catch((error) => {
+        throw error.response;
+      });
 
-        return user;
+    if (user && user.fullName) {
+      user.fullName = JSON.parse(user.fullName);
+    }
+
+    this.userSubject.next(user);
+    console.log('us.login()', user);
+    localStorage.setItem('user', JSON.stringify(user));
+
+    // debugger;
+    // window.history;
+    Router.back();
+    // Router.push({
+    //   pathname: `/`
+    // });
+
+    // return user;
+  }
+
+  public logout() {
+    this.userSubject.next(null);
+    localStorage.removeItem('user');
+    // Router.push('/account/signin', undefined, { shallow: true });
+    Router.reload();
+  }
+
+  public async preRegister(user: object) {
+    return await super
+      .post(`${this.baseUrl}/pre-registration`, user)
+      .catch((error) => {
+        throw error.response;
+      });
+  }
+  public async register(registrationToken: string, verificationCode: string) {
+    return await super
+      .post(`${this.baseUrl}/registration`, {
+        registrationToken,
+        verificationCode
+      })
+      .catch((error) => {
+        throw error.response;
       });
   }
 
-  public static logout() {
-    localStorage.removeItem('user');
-    BaseService.userSubject.next(null);
-    Router.push('/account/login');
-  }
-
-  public register(user: object) {
-    return super.post(`${this.baseUrl}/register`, user);
+  public getConnectedUser() {
+    const user = this.userValue;
+    return super.get(`${this.baseUrl}/user/${user.userName}`);
   }
 
   public getAll() {
-    return super.get(`${this.baseUrl}s`);
+    return super.get(`${this.baseUrl}/users`);
   }
 
   public getById(id: string | number) {

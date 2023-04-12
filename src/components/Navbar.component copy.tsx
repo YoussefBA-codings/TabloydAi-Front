@@ -1,9 +1,4 @@
 import * as React from 'react';
-
-// Types Import
-import { User } from '#/@types/user';
-
-// MUI Export
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,17 +12,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-
-// Service Import
 import { UserService } from '@/services';
 
-const pages = [
-  'Converter',
-  'Pricing',
-  'Blog',
-  'Account/Signin',
-  'Account/Signup'
-];
+const pages = ['Converter', 'Pricing', 'Blog', 'Account/Signin'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
@@ -56,22 +43,12 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const [user, setUser] = React.useState<User>({
-    id: '',
-    userName: '',
-    email: ''
-  });
   const [isConnected, setIsConnected] = React.useState(false);
 
   React.useEffect(() => {
-    const us = new UserService(localStorage.getItem('user'), localStorage);
+    const us = new UserService(localStorage.getItem('user'));
     setIsConnected(us.isConnected);
-    if (isConnected) {
-      us.getConnectedUser().then((user) => {
-        setUser(user);
-      });
-    }
-  }, [isConnected]);
+  }, []);
 
   return (
     <AppBar position="static">
@@ -89,10 +66,10 @@ function ResponsiveAppBar() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              // color: isConnected ? 'green' : 'red',
+              color: 'inherit',
               textDecoration: 'none'
             }}>
-            TablAId
+            LOGO
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -148,60 +125,47 @@ function ResponsiveAppBar() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) =>
-              /Account/i.test(page) && isConnected ? null : (
-                <Button
-                  href={page.toLowerCase()}
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}>
-                  {page}
-                </Button>
-              )
-            )}
+            {pages.map((page) => (
+              <Button
+                href={page.toLowerCase()}
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}>
+                {page}
+              </Button>
+            ))}
           </Box>
 
-          {isConnected ? (
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt={
-                      user.fullName
-                        ? JSON.parse(user.fullName).firstName +
-                          ' ' +
-                          JSON.parse(user.fullName).lastName
-                        : user.userName
-                    }
-                    src="/static/images/avatar/2.jpg"
-                  />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}>
-                {settings.map((setting) => (
-                  <MenuItem
-                    key={setting}
-                    onClick={() => handleCloseUserMenu(setting)}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          ) : null}
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}>
+              {settings.map((setting) => (
+                <MenuItem
+                  key={setting}
+                  onClick={() => handleCloseUserMenu(setting)}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>
