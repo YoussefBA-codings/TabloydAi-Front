@@ -2,7 +2,7 @@ import {
   APPEND_FILE_ACTION,
   REMOVE_FILE_ACTION,
   LOAD_CONVERTED_FILE_ACTION
-} from '@/store/constants';
+} from '@SRC/store/constants';
 
 export const appendFilesAction = (files: any) => ({
   type: APPEND_FILE_ACTION,

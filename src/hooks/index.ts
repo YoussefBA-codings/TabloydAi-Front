@@ -1,1 +1,1 @@
-export * from '@/hooks/store.hook';
+export * from '@SRC/hooks/store.hook';

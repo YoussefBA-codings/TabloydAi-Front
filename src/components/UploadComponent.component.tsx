@@ -1,9 +1,8 @@
 import React from 'react';
-// Types Import
-import { User } from '#/@types/user';
+import { useSession } from 'next-auth/react';
 
 // CSS Import
-import converterStyle from '@/styles/converter/index.module.scss';
+import converterStyle from '@SRC/styles/converter/index.module.scss';
 
 // MUI Export
 import Card from '@mui/material/Card';
@@ -13,37 +12,20 @@ import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 
 // Components Export
-import Submit from '@/components/Submit.component';
-import DropzoneComponent from '@/components/Dorpzone.component';
+import Submit from '@SRC/components/Submit.component';
+import DropzoneComponent from '@SRC/components/Dorpzone.component';
 
 // Service Import
-import { UserService } from '@/services';
 
 // Hooks import
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { useAppSelector } from '@SRC/hooks';
 
 // Store Imports
-import { sendingFile, countFilesSelector } from '@/store/converter';
+import { countFilesSelector } from '@SRC/store/converter';
 
 export default function UploadComponent() {
+  const { data: session } = useSession();
   const countFiles = useAppSelector(countFilesSelector);
-  const [isConnected, setIsConnected] = React.useState(false);
-  const [user, setUser] = React.useState<User>({
-    id: '',
-    userName: '',
-    email: ''
-  });
-
-  React.useEffect(() => {
-    const us = new UserService(localStorage.getItem('user'));
-    setIsConnected(us.isConnected);
-
-    if (isConnected) {
-      us.getConnectedUser().then((user) => {
-        setUser(user);
-      });
-    }
-  }, [isConnected]);
 
   return (
     <Card className={converterStyle.uploadArea}>
@@ -56,10 +38,10 @@ export default function UploadComponent() {
           alignItems="center"
           justifyContent="space-around">
           <DropzoneComponent />
-          {isConnected ? (
+          {session?.user ? (
             <div>
-              <p>Username : {user.userName}</p>
-              <p>Credit : {user.conversionToken}</p>
+              <p>Username : {session?.user.userName}</p>
+              <p>Credit : {session?.user.conversionToken}</p>
             </div>
           ) : (
             <div>
@@ -71,7 +53,9 @@ export default function UploadComponent() {
             </div>
           )}
           {/* <p>Facultative Infos</p> */}
-          <Submit disabled={countFiles > 0 && isConnected ? undefined : true} />
+          <Submit
+            disabled={countFiles > 0 && session?.user ? undefined : true}
+          />
         </Stack>
       </CardActions>
     </Card>

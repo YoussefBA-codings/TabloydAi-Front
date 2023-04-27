@@ -7,7 +7,7 @@ export interface User {
   token?: string;
   id: string;
   userName: string;
-  fullName?: string;
+  fullName?: string | FullName;
   email: string;
   role?: string;
   conversionToken?: number;
