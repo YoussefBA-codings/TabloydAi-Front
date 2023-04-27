@@ -9,14 +9,14 @@ import {
 // import readExcelFile from 'read-excel-file/node';
 
 // Hooks Imports
-import { useAppSelector } from '@/hooks/store.hook';
+import { useAppSelector } from '@SRC/hooks/store.hook';
 
 // Store Imports
-import { convertedFilesSelector } from '@/store/converter/selector';
+import { convertedFilesSelector } from '@SRC/store/converter/selector';
 
 // CSS Import
 import '@grapecity/spread-sheets/styles/gc.spread.sheets.excel2016colorful.css';
-import converterStyle from '@/styles/converter/index.module.scss';
+import converterStyle from '@SRC/styles/converter/index.module.scss';
 
 // MUI Export
 import Card from '@mui/material/Card';

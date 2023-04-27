@@ -1,3 +1,3 @@
-export * from '@/store/converter/actions';
-export * from '@/store/converter/reducer';
-export * from '@/store/converter/selector';
+export * from '@SRC/store/converter/actions';
+export * from '@SRC/store/converter/reducer';
+export * from '@SRC/store/converter/selector';

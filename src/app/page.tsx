@@ -1,20 +1,21 @@
+'use client';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 // Store Import
-import { RootState } from '@/store';
+import { RootState } from '@SRC/store';
 
 // CSS Import
-import converterStyle from '@/styles/converter/index.module.scss';
+import converterStyle from '@SRC/styles/converter/index.module.scss';
 
 // MUI Export
 import { Grid } from '@mui/material';
 
 // Components Export
-import UploadComponent from '@/components/UploadComponent.component';
+import UploadComponent from '@SRC/components/UploadComponent.component';
 const NoSsrCheckerComponent = dynamic(
-  () => import('@/components/CheckerComponent.component'),
+  () => import('@SRC/components/CheckerComponent.component'),
   { ssr: false }
 );
 

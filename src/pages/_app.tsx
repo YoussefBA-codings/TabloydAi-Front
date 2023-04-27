@@ -1,25 +1,9 @@
-import { Provider } from 'react-redux';
-import { useRouter } from 'next/router';
-
-// Store Imports
-import store from '@/store';
+// Types Import
+import type { AppProps } from 'next/app';
 
 // CSS Imports
-import '@/styles/globals.scss';
+import '@SRC/styles/globals.scss';
 
-// MUI Imports
-
-// Components Imports
-import ResponsiveAppBar from '@/components/Navbar.component';
-
-export default function TablAIdApp({ Component, pageProps }: any) {
-  const router = useRouter();
-  return (
-    <>
-      <Provider store={store}>
-        <ResponsiveAppBar />
-        <Component key={router.asPath} {...pageProps} />
-      </Provider>
-    </>
-  );
+export default function TablifyApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
 }

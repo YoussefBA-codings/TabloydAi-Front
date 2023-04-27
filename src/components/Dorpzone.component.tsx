@@ -2,17 +2,20 @@ import React, { useCallback, useMemo } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 // Hooks Imports
-import { useAppSelector, useAppDispatch } from '@/hooks/store.hook';
+import { useAppSelector, useAppDispatch } from '@SRC/hooks/store.hook';
 
 // Store Imports
-import { filesSelector, countFilesSelector } from '@/store/converter/selector';
+import {
+  filesSelector,
+  countFilesSelector
+} from '@SRC/store/converter/selector';
 import {
   appendFilesAction,
   removeFilesAction
-} from '@/store/converter/actions';
+} from '@SRC/store/converter/actions';
 
 // CSS Imports
-import dropzoneStyle from '@/styles/dropzone.module.scss';
+import dropzoneStyle from '@SRC/styles/dropzone.module.scss';
 
 // MUI Imports
 import Card from '@mui/material/Card';
